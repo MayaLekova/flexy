@@ -1,20 +1,20 @@
 //- index page
 if is_home()
-  h4.page-title Recent Articles
+  h4.page-title Скорошни уроци
   each post in site.posts.sort('date', 'desc').toArray()
-    - var reading_length = Math.ceil(post.content.replace(/[^a-zA-Z\s]/g, '').split(/[\s]+/).length / 250)
+    - var reading_length = Math.ceil(post.content.replace(/[^a-zA-Z\s]/g, '').split(/[\s]+/).length / 100)
     a.article(href= config.root + post.path)
       article.item(itemscope, itemprop='blogPost', itemtype='https://schema.org/BlogPosting')
         h2(itemprop='headline')= post.title
         span.post-meta
-          | Published on
+          | Публикувано на
           time(itemprop='datePublished', datetime= post.date.toISOString())= full_date(new Date(post.date), ' dddd, MMMM Do YYYY') + ' at ' + full_date(new Date(post.date), 'H:mm')
-          | , #{reading_length} min read
+          | , #{reading_length} минути за четене
         p(itemprop='text').post-excerpt= post.intro ? post.intro : post.content.replace(/<(?:.|\n)*?>/gm, '').substr(0, 220)
   footer(itemscope, itemtype='https://schema.org/WPFooter')
     include _footer
 //- articles page
-if is_page() && page.title.toLowerCase() == 'articles'
+if is_page() && page.title.toLowerCase() == 'уроци'
   article.full
     h1(itemprop='headline')= page.title
     != page.content
@@ -51,7 +51,7 @@ else if is_post()
   article.full
     h1(itemprop='headline')= page.title
     span.post-meta
-      | Published on
+      | Публикувано на
       time(itemprop='datePublished', datetime= page.date.toISOString())= full_date(new Date(page.date), ' dddd, MMMM Do YYYY') + ' at ' + full_date(new Date(page.date), 'H:mm')
       if page.updated
         br
